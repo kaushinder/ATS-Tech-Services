@@ -58,7 +58,7 @@ const isActive = (path: string): boolean => {
               
               {/* Logo Image */}
               <img
-                src="http://www.atmasamman.com/wp-content/uploads/2021/02/logo.jpg"
+                src="images/logo.jpg"
                 alt="Atmasamman Logo"
                 className="w-10 h-10 rounded-full object-cover"
               />
