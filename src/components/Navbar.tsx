@@ -39,49 +39,58 @@ export default function Navbar() {
     setTechOpen(false);
   }, [location]);
 
-  const isActive = (path: string) => location === path;
+const isActive = (path: string): boolean => {
+  return location === path;
+};
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white shadow-lg"
-          : "bg-transparent"
+        isScrolled ? "bg-white shadow-lg" : "bg-transparent"
       }`}
-      data-testid="navbar"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link href="/" data-testid="link-logo">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">ATS</span>
+
+          {/* ✅ UPDATED LOGO SECTION */}
+          <Link href="/">
+            <div className="flex items-center gap-3 cursor-pointer">
+              
+              {/* Logo Image */}
+              <img
+                src="http://www.atmasamman.com/wp-content/uploads/2021/02/logo.jpg"
+                alt="Atmasamman Logo"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+
+              {/* Text (2 lines) */}
+              <div className="flex flex-col leading-tight">
+                <span
+                  className={`font-bold text-lg ${
+                    isScrolled ? "text-gray-900" : "text-white"
+                  }`}
+                >
+                  Atmasamman
+                </span>
+                <span
+                  className={`text-sm ${
+                    isScrolled ? "text-blue-600" : "text-blue-300"
+                  }`}
+                >
+                  Tech Services
+                </span>
               </div>
-              <span
-                className={`font-bold text-xl font-heading transition-colors ${
-                  isScrolled ? "text-gray-900" : "text-white"
-                }`}
-              >
-                Tech Services
-              </span>
+
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            <Link href="/" data-testid="link-home">
-              <span
-                className={`px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors animated-underline ${
-                  isScrolled
-                    ? isActive("/")
-                      ? "text-blue-600"
-                      : "text-gray-700 hover:text-blue-600"
-                    : isActive("/")
-                    ? "text-blue-300"
-                    : "text-white/90 hover:text-white"
-                }`}
-              >
+
+            <Link href="/">
+              <span className={`px-3 py-2 text-sm font-medium cursor-pointer ${
+                isScrolled ? "text-gray-700" : "text-white"
+              }`}>
                 Home
               </span>
             </Link>
@@ -92,21 +101,17 @@ export default function Navbar() {
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <button
-                className={`flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-blue-600"
-                    : "text-white/90 hover:text-white"
-                }`}
-                data-testid="button-services-dropdown"
-              >
-                Services <ChevronDown className={`w-4 h-4 transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
+              <button className={`flex items-center gap-1 px-3 py-2 text-sm ${
+                isScrolled ? "text-gray-700" : "text-white"
+              }`}>
+                Services <ChevronDown className="w-4 h-4" />
               </button>
+
               {servicesOpen && (
-                <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-xl py-2">
                   {services.map((s) => (
                     <Link key={s.name} href={s.href}>
-                      <span className="block px-4 py-2.5 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 cursor-pointer transition-colors">
+                      <span className="block px-4 py-2 text-sm text-gray-700 hover:text-blue-600">
                         {s.name}
                       </span>
                     </Link>
@@ -115,142 +120,46 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Technologies Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setTechOpen(true)}
-              onMouseLeave={() => setTechOpen(false)}
-            >
-              <button
-                className={`flex items-center gap-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-blue-600"
-                    : "text-white/90 hover:text-white"
-                }`}
-                data-testid="button-tech-dropdown"
-              >
-                Technologies <ChevronDown className={`w-4 h-4 transition-transform ${techOpen ? "rotate-180" : ""}`} />
-              </button>
-              {techOpen && (
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
-                  {technologies.map((t) => (
-                    <Link key={t.name} href={t.href}>
-                      <span className="block px-4 py-2.5 text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 cursor-pointer transition-colors">
-                        {t.name}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <Link href="/portfolio" data-testid="link-portfolio">
-              <span
-                className={`px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${
-                  isScrolled
-                    ? isActive("/portfolio")
-                      ? "text-blue-600"
-                      : "text-gray-700 hover:text-blue-600"
-                    : isActive("/portfolio")
-                    ? "text-blue-300"
-                    : "text-white/90 hover:text-white"
-                }`}
-              >
-                Portfolio
-              </span>
-            </Link>
-
-            <Link href="/about" data-testid="link-about">
-              <span
-                className={`px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${
-                  isScrolled
-                    ? isActive("/about")
-                      ? "text-blue-600"
-                      : "text-gray-700 hover:text-blue-600"
-                    : isActive("/about")
-                    ? "text-blue-300"
-                    : "text-white/90 hover:text-white"
-                }`}
-              >
+            <Link href="/about">
+              <span className={`px-3 py-2 text-sm ${
+                isScrolled ? "text-gray-700" : "text-white"
+              }`}>
                 About
               </span>
             </Link>
 
-            <Link href="/careers" data-testid="link-careers">
-              <span
-                className={`px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${
-                  isScrolled
-                    ? "text-gray-700 hover:text-blue-600"
-                    : "text-white/90 hover:text-white"
-                }`}
-              >
-                Careers
+            <Link href="/contact">
+              <span className={`px-3 py-2 text-sm ${
+                isScrolled ? "text-gray-700" : "text-white"
+              }`}>
+                Contact
               </span>
             </Link>
           </div>
 
-          {/* CTA Buttons */}
+          {/* CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="tel:+917830060800"
-              className={`flex items-center gap-2 text-sm font-medium transition-colors ${
-                isScrolled ? "text-gray-700 hover:text-blue-600" : "text-white/90 hover:text-white"
-              }`}
-              data-testid="link-phone"
-            >
+            <a href="tel:+917830060800" className="flex items-center gap-2 text-sm">
               <Phone className="w-4 h-4" />
               +91 7830060800
             </a>
+
             <Link href="/contact">
-              <button
-                className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
-                data-testid="button-get-quote"
-              >
-                Get Free Quote
+              <button className="bg-blue-600 text-white px-5 py-2.5 rounded-lg">
+                Get Quote
               </button>
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Toggle */}
           <button
-            className={`lg:hidden p-2 rounded-md ${isScrolled ? "text-gray-700" : "text-white"}`}
+            className="lg:hidden p-2"
             onClick={() => setMobileOpen(!mobileOpen)}
-            data-testid="button-mobile-menu"
           >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileOpen ? <X /> : <Menu />}
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-100 shadow-xl">
-          <div className="px-4 py-4 space-y-1">
-            {[
-              { href: "/", label: "Home" },
-              { href: "/services", label: "Services" },
-              { href: "/technologies", label: "Technologies" },
-              { href: "/portfolio", label: "Portfolio" },
-              { href: "/about", label: "About" },
-              { href: "/careers", label: "Careers" },
-              { href: "/contact", label: "Contact" },
-            ].map((item) => (
-              <Link key={item.href} href={item.href}>
-                <span className="block px-3 py-2.5 text-gray-800 hover:text-blue-600 hover:bg-blue-50 rounded-lg cursor-pointer font-medium transition-colors">
-                  {item.label}
-                </span>
-              </Link>
-            ))}
-            <div className="pt-3 border-t border-gray-100">
-              <Link href="/contact">
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors">
-                  Get Free Quote
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 }
